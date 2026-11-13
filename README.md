@@ -4,6 +4,13 @@ AI-powered mock interview tool: upload your resume + job description,
 get tailored interview questions, answer them, and receive rubric-based
 scores and feedback. Progress is saved across sessions.
 
+## Live Demo
+https://ai-mock-interviewer-manasvi.streamlit.app/
+
+> Note: the backend runs on a free tier and sleeps when idle, so the first
+> request can take up to a minute. Interview history may reset when the
+> backend restarts (SQLite on free hosting)
+
 ## Features
 - Tailored questions generated from resume + job description
 - Rubric scoring (relevance, technical accuracy, clarity, depth)
@@ -56,3 +63,14 @@ in my own Python code, because that part should be deterministic.
 
 Next, I want to add OCR for scanned resumes and move the database to something
 that persists on free hosting.
+
+
+## Screenshots
+
+![User Input page](screenshots/userinput.png)
+
+![Questions page](screenshots/questions.png)
+
+![Scores page](screenshots/scores/history.png)
+
+![Progress page](screenshots/progress.png)
