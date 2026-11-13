@@ -1,8 +1,9 @@
 import requests
 import streamlit as st
+import os
+import pdfplumber
 
-API_URL = "http://127.0.0.1:8000"
-
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 st.set_page_config(page_title="AI Mock Interviewer", page_icon="🎤")
 st.title("🎤 AI Mock Interviewer")
 
@@ -23,6 +24,10 @@ def call_api(method: str, path: str, **kwargs):
         return None
     return response.json()
 
+def extract_pdf_text(uploaded_file) -> str:
+    with pdfplumber.open(uploaded_file) as pdf:
+        pages = [page.extract_text() or "" for page in pdf.pages]
+    return "\n".join(pages).strip()
 
 #Streamlit reruns the script from top to bottom on every interaction, so we use session_state to keep track of the current interview session and its state.
 if "session_id" not in st.session_state:
@@ -33,7 +38,14 @@ if "session_id" not in st.session_state:
 
 # ---------- 1. Start a new interview ----------
 st.subheader("1. Start a new interview")
-resume_text = st.text_area("Resume text", height=150)
+uploaded_pdf = st.file_uploader("Upload resume (PDF)", type="pdf")
+extracted_text = ""
+if uploaded_pdf is not None:
+    extracted_text = extract_pdf_text(uploaded_pdf)
+    if not extracted_text:
+        st.warning("PDF se text nahi nikla (scanned PDF ho sakta hai). Neeche text paste kar do.")
+
+resume_text = st.text_area("Resume text", value=extracted_text, height=150)
 job_description = st.text_area("Job description", height=150)
 num_questions = st.number_input("Number of questions", min_value=1, max_value=10, value=5)
 

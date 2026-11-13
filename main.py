@@ -18,7 +18,10 @@ if not api_key:
 
 client = genai.Client(api_key=api_key,http_options=types.HttpOptions(timeout=60_000),
 )
-MODEL_NAMES = ["gemini-3.5-flash-lite", "gemini-3.6-flash"]
+MODEL_NAMES = [
+    name.strip()
+    for name in os.getenv("MODEL_NAMES", "gemini-3.5-flash-lite,gemini-3.6-flash").split(",")
+]
 MAX_RETRIES = 3
 app = FastAPI()
 
