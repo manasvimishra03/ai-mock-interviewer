@@ -71,6 +71,6 @@ that persists on free hosting.
 
 ![Questions page](screenshots/questions.png)
 
-![Scores page](screenshots/scores/history.png)
+![Scores page](screenshots/scores.png)
 
 ![Progress page](screenshots/progress.png)
